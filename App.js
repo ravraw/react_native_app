@@ -7,24 +7,37 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
     'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+    'Shake or press menu button for dev menu'
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+// type Props = {};
+export default class App extends Component {
+  state = {
+    placeName: ''
+  };
+
+  placeNameChangedHandler = val => {
+    this.setState({
+      placeName: val
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <TextInput
+          style={styles.textInput}
+          value={this.state.placeName}
+          onChangeText={this.placeNameChangedHandler}
+          placeholder="Enter Place Name"
+        />
       </View>
     );
   }
@@ -33,18 +46,14 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  textInput: {
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+    width: 300,
+    marginTop: 50
+  }
 });
