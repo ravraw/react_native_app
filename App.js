@@ -27,13 +27,30 @@ const instructions = Platform.select({
 // type Props = {};
 export default class App extends Component {
   state = {
-    placeName: ''
+    placeName: '',
+    places: ['Calgary']
   };
 
   placeNameChangedHandler = val => {
     this.setState({
       placeName: val
     });
+  };
+
+  placeSubmitHandler = () => {
+    if (this.state.placeName.trim() === '') {
+      return;
+    }
+    this.setState(prevState => {
+      return {
+        places: [...prevState.places, prevState.placeName],
+        placeName: ''
+      };
+    });
+  };
+
+  renderPlaces = () => {
+    return this.state.places.map((place, i) => <Text key={i}>{place}</Text>);
   };
 
   render() {
@@ -46,8 +63,14 @@ export default class App extends Component {
             onChangeText={this.placeNameChangedHandler}
             placeholder="Enter Place Name"
           />
-          <Button title="Add" color="#841584" style={styles.buttonInput} />
+          <Button
+            title="Add"
+            color="#841584"
+            style={styles.buttonInput}
+            onPress={this.placeSubmitHandler}
+          />
         </View>
+        <View>{this.renderPlaces()}</View>
       </View>
     );
   }
