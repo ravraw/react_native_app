@@ -17,7 +17,11 @@ function PlaceDetails(props) {
     );
   }
   return (
-    <Modal visible={props.selectedPlace !== null} animationType="slide">
+    <Modal
+      onRequestClose={props.closeModalHandler}
+      visible={props.selectedPlace !== null}
+      animationType="slide"
+    >
       {modalContent}
       <View>
         <Button
