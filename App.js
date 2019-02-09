@@ -21,8 +21,10 @@ import PlaceInput from './src/components/PlaceInput';
 import PlaceList from './src/components/PlaceList';
 import Calgary from './src/assets/calgary.jpeg';
 import PlaceDetails from './src/components/PlaceDetails';
+import { connect } from 'react-recdux';
+import * as actions from './src/store/actions';
 
-export default class App extends Component {
+class App extends Component {
   state = {
     placeName: '',
     selectedPlace: null,
@@ -126,3 +128,25 @@ const styles = StyleSheet.create({
     padding: 50
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    placeName: state.places.placeName,
+    places: state.places.places,
+    selectedPlace: state.places.selectedPlace
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddPlace: placeName => dispatch(actions.addPlace(placeName)),
+    onDeletePlace: key => dispatch(actions.deletePlace(key)),
+    onSelectPlace: key => dispatch(action.selectPlace(key)),
+    onDeselectPlace: () => dispatch(action.deselectplace())
+  };
+};
+
+export default connect(
+  mapstateToProps,
+  mapDispatchToProps
+)(App);
