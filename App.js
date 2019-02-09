@@ -8,7 +8,14 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  FlatList
+} from 'react-native';
 
 import PlaceInput from './src/components/PlaceInput';
 import PlaceList from './src/components/PlaceList';
@@ -16,7 +23,7 @@ import PlaceList from './src/components/PlaceList';
 export default class App extends Component {
   state = {
     placeName: '',
-    places: ['Calgary']
+    places: [{ key: `${Math.random()}`, value: 'Calgary' }]
   };
 
   // handler to keep track of input change
@@ -33,17 +40,25 @@ export default class App extends Component {
     }
     this.setState(prevState => {
       return {
-        places: [prevState.placeName, ...prevState.places],
+        places: [
+          { key: `${Math.random()}`, value: prevState.placeName },
+          ...prevState.places
+        ],
         placeName: ''
       };
     });
   };
 
-  // delete item
-  deleteItemHandler = index => {
+  // delete item handler
+  deleteItemHandler = key => {
+    //  {
+    //   let newPlaces = [...this.state.places];
+    //   newPlaces.splice(key, 1);
+    //   this.setState({ places: newPlaces });
+    // };
     this.setState(prevState => {
       return {
-        places: prevState.places.filter((places, i) => i !== index)
+        places: prevState.places.filter(place => place.key !== key)
       };
     });
   };
