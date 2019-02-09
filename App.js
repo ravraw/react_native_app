@@ -32,8 +32,7 @@ export default class App extends Component {
   // handler to keep track of input change
   placeNameChangedHandler = val => {
     this.setState({
-      placeName: val,
-      placeImage: Calgary
+      placeName: val
     });
   };
 
@@ -48,7 +47,10 @@ export default class App extends Component {
           {
             key: `${Math.random()}`,
             placeName: prevState.placeName,
-            placeImage: Calgary
+            placeImage: {
+              uri:
+                'https://www.959chfm.com/wp-content/uploads/sites/12/2017/02/Tower-e1487706581799.png'
+            }
           },
           ...prevState.places
         ],
