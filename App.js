@@ -19,17 +19,21 @@ import {
 
 import PlaceInput from './src/components/PlaceInput';
 import PlaceList from './src/components/PlaceList';
+import Calgary from './src/assets/calgary.jpeg';
 
 export default class App extends Component {
   state = {
     placeName: '',
-    places: [{ key: `${Math.random()}`, value: 'Calgary' }]
+    places: [
+      { key: `${Math.random()}`, placeName: 'Calgary', placeImage: Calgary }
+    ]
   };
 
   // handler to keep track of input change
   placeNameChangedHandler = val => {
     this.setState({
-      placeName: val
+      placeName: val,
+      placeImage: Calgary
     });
   };
 
@@ -41,7 +45,11 @@ export default class App extends Component {
     this.setState(prevState => {
       return {
         places: [
-          { key: `${Math.random()}`, value: prevState.placeName },
+          {
+            key: `${Math.random()}`,
+            placeName: prevState.placeName,
+            placeImage: Calgary
+          },
           ...prevState.places
         ],
         placeName: ''
