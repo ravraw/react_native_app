@@ -69,7 +69,8 @@ export default class App extends Component {
   deleteItemHandler = key => {
     this.setState(prevState => {
       return {
-        places: prevState.places.filter(place => place.key !== key)
+        places: prevState.places.filter(place => place.key !== key),
+        selectedPlace: null
       };
     });
   };
@@ -84,10 +85,23 @@ export default class App extends Component {
     });
   };
 
+  // close modal handler
+  closeModalHandler = () => {
+    this.setState(prevState => {
+      return {
+        selectedPlace: null
+      };
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <PlaceDetails selectedPlace={this.state.selectedPlace} />
+        <PlaceDetails
+          selectedPlace={this.state.selectedPlace}
+          closeModalHandler={this.closeModalHandler}
+          deleteItemHandler={this.deleteItemHandler}
+        />
         <PlaceInput
           placeName={this.state.placeName}
           placeNameChangedHandler={this.placeNameChangedHandler}

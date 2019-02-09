@@ -20,8 +20,16 @@ function PlaceDetails(props) {
     <Modal visible={props.selectedPlace !== null} animationType="slide">
       {modalContent}
       <View>
-        <Button title="Delete" color="red" />
-        <Button title="Close" color="green" />
+        <Button
+          title="Delete"
+          color="red"
+          onPress={() =>
+            props.deleteItemHandler(
+              props.selectedPlace ? props.selectedPlace.key : null
+            )
+          }
+        />
+        <Button title="Close" color="green" onPress={props.closeModalHandler} />
       </View>
     </Modal>
   );
