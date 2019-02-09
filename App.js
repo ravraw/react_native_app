@@ -10,18 +10,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
-import ListItem from './src/components/ListItem/ListItem';
 import PlaceInput from './src/components/PlaceInput';
 import PlaceList from './src/components/PlaceList';
 
-// const instructions = Platform.select({
-//   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-//   android:
-//     'Double tap R on your keyboard to reload,\n' +
-//     'Shake or press menu button for dev menu'
-// });
-
-// type Props = {};
 export default class App extends Component {
   state = {
     placeName: '',
@@ -48,6 +39,15 @@ export default class App extends Component {
     });
   };
 
+  // delete item
+  deleteItemHandler = index => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.filter((places, i) => i !== index)
+      };
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -56,7 +56,10 @@ export default class App extends Component {
           placeNameChangedHandler={this.placeNameChangedHandler}
           placeSubmitHandler={this.placeSubmitHandler}
         />
-        <PlaceList places={this.state.places} />
+        <PlaceList
+          places={this.state.places}
+          deleteItemHandler={this.deleteItemHandler}
+        />
       </View>
     );
   }
