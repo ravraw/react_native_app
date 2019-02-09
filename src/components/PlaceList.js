@@ -11,7 +11,7 @@ function PlaceList(props) {
         <ListItem
           placeName={info.item.placeName}
           placeImage={info.item.placeImage}
-          onItemPressed={() => props.deleteItemHandler(info.item.key)}
+          onItemPressed={() => props.placeSelectedHandler(info.item.key)}
         />
       )}
     />

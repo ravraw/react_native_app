@@ -20,12 +20,18 @@ import {
 import PlaceInput from './src/components/PlaceInput';
 import PlaceList from './src/components/PlaceList';
 import Calgary from './src/assets/calgary.jpeg';
+import PlaceDetails from './src/components/PlaceDetails';
 
 export default class App extends Component {
   state = {
     placeName: '',
+    selectedPlace: null,
     places: [
-      { key: `${Math.random()}`, placeName: 'Calgary', placeImage: Calgary }
+      {
+        key: `${Math.random()}`,
+        placeName: 'Calgary',
+        placeImage: Calgary
+      }
     ]
   };
 
@@ -61,11 +67,6 @@ export default class App extends Component {
 
   // delete item handler
   deleteItemHandler = key => {
-    //  {
-    //   let newPlaces = [...this.state.places];
-    //   newPlaces.splice(key, 1);
-    //   this.setState({ places: newPlaces });
-    // };
     this.setState(prevState => {
       return {
         places: prevState.places.filter(place => place.key !== key)
@@ -73,9 +74,20 @@ export default class App extends Component {
     });
   };
 
+  // placeSelected Handler
+
+  placeSelectedHandler = key => {
+    this.setState(prevState => {
+      return {
+        selectedPlace: prevState.places.find(place => place.key === key)
+      };
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
+        <PlaceDetails selectedPlace={this.state.selectedPlace} />
         <PlaceInput
           placeName={this.state.placeName}
           placeNameChangedHandler={this.placeNameChangedHandler}
@@ -84,6 +96,7 @@ export default class App extends Component {
         <PlaceList
           places={this.state.places}
           deleteItemHandler={this.deleteItemHandler}
+          placeSelectedHandler={this.placeSelectedHandler}
         />
       </View>
     );
