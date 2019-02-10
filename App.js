@@ -38,79 +38,45 @@ class App extends Component {
   };
 
   // handler to keep track of input change
-  placeNameChangedHandler = val => {
-    this.setState({
-      placeName: val
-    });
+  placeNameChangedHandler = placeName => {
+    this.props.onPlaceNameChange(placeName);
   };
 
   // handler to submit input
   placeSubmitHandler = () => {
-    if (this.state.placeName.trim() === '') {
-      return;
-    }
-    this.setState(prevState => {
-      return {
-        places: [
-          {
-            key: `${Math.random()}`,
-            placeName: prevState.placeName,
-            placeImage: {
-              uri:
-                'https://www.959chfm.com/wp-content/uploads/sites/12/2017/02/Tower-e1487706581799.png'
-            }
-          },
-          ...prevState.places
-        ],
-        placeName: ''
-      };
-    });
+    this.props.addPlace(placeName);
   };
 
   // delete item handler
   deleteItemHandler = key => {
-    this.setState(prevState => {
-      return {
-        places: prevState.places.filter(place => place.key !== key),
-        selectedPlace: null
-      };
-    });
+    this.props.onDeletePlace(key);
   };
 
   // placeSelected Handler
-
   placeSelectedHandler = key => {
-    this.setState(prevState => {
-      return {
-        selectedPlace: prevState.places.find(place => place.key === key)
-      };
-    });
+    this.props.onSelectPlace(key);
   };
 
   // close modal handler
   closeModalHandler = () => {
-    this.setState(prevState => {
-      return {
-        selectedPlace: null
-      };
-    });
+    this.props.onDeselectPlace();
   };
 
   render() {
     return (
       <View style={styles.container}>
         <PlaceDetails
-          selectedPlace={this.state.selectedPlace}
+          selectedPlace={this.props.selectedPlace}
           closeModalHandler={this.closeModalHandler}
           deleteItemHandler={this.deleteItemHandler}
         />
         <PlaceInput
-          placeName={this.state.placeName}
+          placeName={this.props.placeName}
           placeNameChangedHandler={this.placeNameChangedHandler}
           placeSubmitHandler={this.placeSubmitHandler}
         />
         <PlaceList
-          places={this.state.places}
+          places={this.props.places}
           deleteItemHandler={this.deleteItemHandler}
           placeSelectedHandler={this.placeSelectedHandler}
         />
@@ -131,7 +97,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    placeName: state.places.placeName,
+    placeName: state.placeName.placeName,
     places: state.places.places,
     selectedPlace: state.places.selectedPlace
   };
@@ -139,6 +105,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onPlaceNameChange: placeName => dispatch(actions.inputChange(placeName)),
     onAddPlace: placeName => dispatch(actions.addPlace(placeName)),
     onDeletePlace: key => dispatch(actions.deletePlace(key)),
     onSelectPlace: key => dispatch(action.selectPlace(key)),
