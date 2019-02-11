@@ -21,7 +21,7 @@ import PlaceInput from './src/components/PlaceInput';
 import PlaceList from './src/components/PlaceList';
 import Calgary from './src/assets/calgary.jpeg';
 import PlaceDetails from './src/components/PlaceDetails';
-import { connect } from 'react-recdux';
+import { connect } from 'react-redux';
 import * as actions from './src/store/actions';
 
 class App extends Component {
@@ -43,8 +43,8 @@ class App extends Component {
   };
 
   // handler to submit input
-  placeSubmitHandler = () => {
-    this.props.addPlace(placeName);
+  placeSubmitHandler = placeName => {
+    this.props.onAddPlace(placeName);
   };
 
   // delete item handler
@@ -108,12 +108,12 @@ const mapDispatchToProps = dispatch => {
     onPlaceNameChange: placeName => dispatch(actions.inputChange(placeName)),
     onAddPlace: placeName => dispatch(actions.addPlace(placeName)),
     onDeletePlace: key => dispatch(actions.deletePlace(key)),
-    onSelectPlace: key => dispatch(action.selectPlace(key)),
-    onDeselectPlace: () => dispatch(action.deselectplace())
+    onSelectPlace: key => dispatch(actions.selectPlace(key)),
+    onDeselectPlace: () => dispatch(actions.deselectPlace())
   };
 };
 
 export default connect(
-  mapstateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(App);

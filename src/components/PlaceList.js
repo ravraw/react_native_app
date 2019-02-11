@@ -7,11 +7,11 @@ function PlaceList(props) {
     <FlatList
       style={styles.listContainer}
       data={props.places}
-      renderItem={info => (
+      renderItem={({ item }) => (
         <ListItem
-          placeName={info.item.placeName}
-          placeImage={info.item.placeImage}
-          onItemPressed={() => props.placeSelectedHandler(info.item.key)}
+          placeName={item.placeName}
+          placeImage={item.placeImage}
+          onItemPressed={() => props.placeSelectedHandler(item.key)}
         />
       )}
     />

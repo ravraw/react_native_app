@@ -11,9 +11,8 @@ const inputReducer = (state = initialState, action) => {
         ...state,
         placeName: action.payload.placeName
       };
-      break;
     default:
-      break;
+      return state;
   }
 };
 
